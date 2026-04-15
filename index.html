@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Fiber Optics in the Data Center — Interactive Guide</title>
+<title>ไฟเบอร์ออปติกในดาต้าเซ็นเตอร์ — คู่มือเชิงโต้ตอบ</title>
 <style>
   :root {
     --bg: #05070d;
@@ -22,8 +22,8 @@
     margin: 0; padding: 0;
     background: radial-gradient(1200px 800px at 20% -10%, #132046 0%, var(--bg) 60%) fixed;
     color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
-    line-height: 1.55;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Sarabun", "Noto Sans Thai", Inter, Roboto, sans-serif;
+    line-height: 1.7;
   }
   header {
     padding: 64px 24px 32px;
@@ -38,7 +38,7 @@
     background-clip: text;
     color: transparent;
   }
-  header p { color: var(--muted); max-width: 720px; margin: 0 auto; }
+  header p { color: var(--muted); max-width: 780px; margin: 0 auto; }
   nav {
     position: sticky; top: 0; z-index: 10;
     background: rgba(5,7,13,.85);
@@ -52,6 +52,7 @@
     border: 1px solid transparent; border-radius: 999px;
     padding: 8px 16px; cursor: pointer; font-size: 14px;
     transition: all .2s;
+    font-family: inherit;
   }
   nav button:hover { color: var(--text); }
   nav button.active {
@@ -65,6 +66,7 @@
   @keyframes fade { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: none; } }
   h2 { font-size: 28px; margin-top: 0; }
   h3 { color: var(--accent); margin-bottom: 6px; }
+  h4 { color: var(--accent-2); margin: 16px 0 6px; }
   .grid { display: grid; gap: 16px; }
   .grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
   .grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
@@ -85,7 +87,6 @@
   .tag.alt { background: rgba(184,146,255,.15); color: var(--accent-2); }
   .tag.warn { background: rgba(255,180,84,.15); color: var(--warn); }
 
-  /* Signal flow diagram */
   .flow {
     position: relative;
     background: var(--bg-2);
@@ -136,7 +137,6 @@
   }
   .stage-detail b { color: var(--text); }
 
-  /* Companies */
   .company-logo {
     width: 56px; height: 56px; border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
@@ -154,22 +154,6 @@
   ul { padding-left: 18px; }
   li { margin-bottom: 4px; }
 
-  /* Quiz */
-  .quiz { background: var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px; }
-  .quiz .q { font-weight: 600; margin-bottom: 12px; }
-  .quiz .opts { display: grid; gap: 8px; }
-  .quiz .opts button {
-    background: var(--bg-2); color: var(--text);
-    border: 1px solid var(--line); border-radius: 8px;
-    padding: 10px 14px; text-align: left; cursor: pointer;
-    font-size: 14px;
-  }
-  .quiz .opts button:hover { border-color: var(--accent); }
-  .quiz .opts button.correct { border-color: var(--ok); background: rgba(92,242,154,.1); }
-  .quiz .opts button.wrong { border-color: #ff6b6b; background: rgba(255,107,107,.1); }
-  .quiz .explain { margin-top: 12px; font-size: 13px; color: var(--muted); min-height: 20px; }
-
-  /* Cable interactive */
   .cable-wrap { text-align: center; margin: 20px 0; }
   .cable-svg { max-width: 520px; width: 100%; }
   .cable-layer { cursor: pointer; transition: opacity .2s; }
@@ -183,78 +167,168 @@
   footer { text-align: center; color: var(--muted); padding: 30px; font-size: 12px; border-top: 1px solid var(--line); }
 
   .stat {
-    display: inline-block; margin-right: 18px;
+    display: inline-block; margin-right: 18px; margin-bottom: 8px;
     font-size: 13px; color: var(--muted);
   }
   .stat b { color: var(--accent); font-size: 18px; display: block; }
+
+  .callout {
+    background: linear-gradient(135deg, rgba(76,201,255,.08), rgba(184,146,255,.08));
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .callout b { color: var(--accent); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  th { color: var(--accent); font-weight: 600; }
+  td { color: var(--muted); }
+  td b { color: var(--text); }
 </style>
 </head>
 <body>
 <header>
-  <h1>Fiber Optics in the Data Center</h1>
-  <p>An interactive guide to how light moves data inside and between hyperscale data centers — and the companies that build the photonics powering it all.</p>
+  <h1>ไฟเบอร์ออปติกในดาต้าเซ็นเตอร์</h1>
+  <p>คู่มือเชิงโต้ตอบอธิบายว่าแสงส่งข้อมูลภายในและระหว่างดาต้าเซ็นเตอร์ขนาดใหญ่ได้อย่างไร พร้อมเจาะลึกบริษัทในห่วงโซ่อุปทานที่ผลิตส่วนประกอบเหล่านี้</p>
 </header>
 
 <nav id="nav">
-  <button data-tab="basics" class="active">Basics</button>
-  <button data-tab="flow">Signal Flow</button>
-  <button data-tab="cable">Inside a Cable</button>
-  <button data-tab="dc">Data Center Use</button>
+  <button data-tab="basics" class="active">พื้นฐาน</button>
+  <button data-tab="physics">หลักการทำงาน</button>
+  <button data-tab="flow">การส่งสัญญาณ</button>
+  <button data-tab="cable">ภายในสายเคเบิล</button>
+  <button data-tab="dc">การใช้งานใน DC</button>
   <button data-tab="dwdm">DWDM</button>
-  <button data-tab="supply">Supply Chain</button>
-  <button data-tab="companies">Companies</button>
-  <button data-tab="quiz">Quiz</button>
+  <button data-tab="supply">ห่วงโซ่อุปทาน</button>
+  <button data-tab="companies">บริษัท</button>
 </nav>
 
 <main>
 
 <!-- BASICS -->
 <section id="basics" class="active">
-  <h2>How does a fiber carry data?</h2>
-  <p>A fiber optic cable is a glass thread — thinner than a human hair — that guides pulses of light down its core through <b>total internal reflection</b>. A laser flashes on and off billions of times per second; a photodetector at the far end turns those flashes back into 1s and 0s.</p>
+  <h2>ไฟเบอร์ออปติกคืออะไร?</h2>
+  <p>สายไฟเบอร์ออปติกคือ<b>เส้นใยแก้วบริสุทธิ์</b>ที่บางกว่าเส้นผมมนุษย์ ใช้นำพา<b>พัลส์ของแสง</b>ผ่านปรากฏการณ์ที่เรียกว่า <b>การสะท้อนกลับหมด (Total Internal Reflection)</b> ข้อมูลดิจิทัล 1 และ 0 ถูกแปลงเป็นแสงที่กะพริบเปิด-ปิดหลายพันล้านครั้งต่อวินาที จากนั้นตัวรับที่ปลายอีกด้านแปลงแสงกลับเป็นสัญญาณไฟฟ้าและข้อมูลดิจิทัล</p>
 
   <div class="grid cols-3">
     <div class="card">
-      <h3>Core</h3>
-      <p>The inner glass strand (8 µm for single-mode, 50 µm for multimode) where the light actually travels.</p>
+      <h3>แกน (Core)</h3>
+      <p>เส้นแก้วด้านในที่แสงเดินทางจริง ขนาด 8–10 μm สำหรับ single-mode และ 50 μm สำหรับ multimode</p>
     </div>
     <div class="card">
-      <h3>Cladding</h3>
-      <p>A surrounding glass layer with a slightly lower refractive index — it bounces stray light back into the core.</p>
+      <h3>เปลือก (Cladding)</h3>
+      <p>แก้วชั้นนอกที่มีดัชนีหักเหต่ำกว่าเล็กน้อย ทำหน้าที่สะท้อนแสงกลับเข้าสู่แกนไม่ให้ลอดออกไป</p>
     </div>
     <div class="card">
-      <h3>Transceiver</h3>
-      <p>A pluggable module (QSFP, OSFP) with a laser + driver on the TX side and a photodiode + TIA on the RX side.</p>
+      <h3>ทรานซีฟเวอร์ (Transceiver)</h3>
+      <p>โมดูลเสียบถอดได้ (QSFP, OSFP) มีเลเซอร์ + วงจรขับฝั่งส่ง และโฟโตไดโอด + TIA ฝั่งรับ</p>
     </div>
   </div>
 
   <div class="card" style="margin-top:20px">
     <h3>Single-mode vs Multimode</h3>
-    <p><span class="tag">SMF</span> One narrow path for light → long distances (up to 80+ km), used between buildings and for long-reach DC interconnect.</p>
-    <p><span class="tag alt">MMF</span> Wider core supports many light paths → cheap VCSELs, used for short intra-rack or intra-row runs (up to ~100 m at 400G).</p>
+    <p><span class="tag">SMF</span> แกนเล็ก แสงเดินทางเส้นทางเดียว → ใช้ระยะไกลได้ถึง 80+ กม. เหมาะสำหรับเชื่อมระหว่างอาคารหรือ DCI</p>
+    <p><span class="tag alt">MMF</span> แกนใหญ่กว่า รองรับหลายเส้นทางแสง → ราคาถูกกว่าเพราะใช้ VCSEL เหมาะกับระยะสั้นภายในแร็คหรือในแถว (สูงสุด ~100 เมตรที่ 400G)</p>
   </div>
 
   <div style="margin-top:20px">
-    <div class="stat"><b>~200,000 km/s</b>speed of light in glass</div>
-    <div class="stat"><b>0.2 dB/km</b>loss at 1550 nm</div>
-    <div class="stat"><b>1.6 Tb/s</b>per transceiver (2025)</div>
+    <div class="stat"><b>~200,000 กม./วิ</b>ความเร็วแสงในแก้ว</div>
+    <div class="stat"><b>0.2 dB/กม.</b>การสูญเสียที่ 1550 nm</div>
+    <div class="stat"><b>1.6 Tb/s</b>ต่อทรานซีฟเวอร์ (2025)</div>
+    <div class="stat"><b>~5 μs</b>ความหน่วงในแฟบริก DC</div>
   </div>
+</section>
+
+<!-- PHYSICS -->
+<section id="physics">
+  <h2>หลักการทำงาน — ตั้งแต่ฟิสิกส์ถึงบิตข้อมูล</h2>
+
+  <div class="callout">
+    <b>ภาพรวม:</b> คอมพิวเตอร์พูดคุยกันด้วยแสง โดยใช้เลเซอร์เปล่งแสงเข้าสายแก้ว → แสงเดินทางผ่านการสะท้อนกลับหมด → ตัวรับที่ปลายทางแปลงแสงกลับเป็นไฟฟ้า ทั้งระบบทำงานได้เพราะฟิสิกส์ 3 เรื่องหลัก คือ การหักเหของแสง การมอดูเลต และการขยาย
+  </div>
+
+  <h3>1. การสะท้อนกลับหมด (Total Internal Reflection)</h3>
+  <p>เมื่อแสงเคลื่อนที่จากตัวกลางดัชนีหักเหสูง (แกนแก้ว n≈1.468) เข้าสู่ตัวกลางดัชนีต่ำกว่า (เปลือก n≈1.463) ที่มุมตกกระทบมากกว่ามุมวิกฤต แสงจะถูก<b>สะท้อนกลับ 100%</b>ไม่ลอดออกไปเลย แสงจึงกระเด้งไปมาในแกนยาวนับร้อยกิโลเมตรโดยแทบไม่สูญเสีย</p>
+
+  <h3>2. หน้าต่างความยาวคลื่น (Wavelength Windows)</h3>
+  <p>แก้ว SiO₂ สูญเสียพลังงานต่ำสุดที่ความยาวคลื่นเฉพาะ ซึ่งถูกเลือกใช้เป็นช่องส่งข้อมูลมาตรฐาน</p>
+  <table>
+    <tr><th>ย่าน</th><th>ความยาวคลื่น</th><th>การใช้งาน</th></tr>
+    <tr><td><b>O-band</b></td><td>1260–1360 nm</td><td>Datacenter SMF ระยะสั้น (FR4, LR)</td></tr>
+    <tr><td><b>C-band</b></td><td>1530–1565 nm</td><td>Long-haul, DWDM, Coherent 400ZR/800ZR</td></tr>
+    <tr><td><b>L-band</b></td><td>1565–1625 nm</td><td>ขยายช่องสัญญาณเมื่อ C-band เต็ม</td></tr>
+    <tr><td><b>850 nm</b></td><td>Short-wave</td><td>MMF ภายในแร็ค ใช้ VCSEL ราคาถูก</td></tr>
+  </table>
+
+  <h3>3. การมอดูเลต (Modulation) — ใส่ข้อมูลในแสงอย่างไร?</h3>
+  <p>ข้อมูลถูก "เขียน" ลงบนคลื่นแสงได้หลายรูปแบบ แต่ละแบบแลกเปลี่ยนระหว่างอัตราบิต ระยะทาง และความซับซ้อน</p>
+  <div class="grid cols-2">
+    <div class="card">
+      <h4>NRZ (On-Off Keying)</h4>
+      <p>เปิดแสง = 1, ปิดแสง = 0 ง่ายที่สุด ใช้มาตลอดยุค 10G–100G หนึ่งสัญลักษณ์ = หนึ่งบิต</p>
+    </div>
+    <div class="card">
+      <h4>PAM4 (4-Level)</h4>
+      <p>ใช้ความเข้มแสง 4 ระดับแทน 2 สองบิตต่อสัญลักษณ์ เป็นมาตรฐานที่ 100G/lane ขึ้นไป (400G, 800G, 1.6T datacom)</p>
+    </div>
+    <div class="card">
+      <h4>QAM / Coherent</h4>
+      <p>ใช้ทั้ง<b>ความเข้ม + เฟส + โพลาไรเซชัน</b>ของแสง ได้ 8–16 บิตต่อสัญลักษณ์ หัวใจของ 400ZR, 800ZR สำหรับ DCI ระยะไกล ต้องใช้ DSP ขนาดใหญ่</p>
+    </div>
+    <div class="card">
+      <h4>DWDM</h4>
+      <p>ส่งหลายความยาวคลื่นพร้อมกันในเส้นเดียว เหมือนมีหลายช่องวิทยุในสายเดียว เพิ่มความจุได้ 80–96 เท่า</p>
+    </div>
+  </div>
+
+  <h3>4. แหล่งกำเนิดแสง (Laser Sources)</h3>
+  <table>
+    <tr><th>ชนิด</th><th>ชื่อเต็ม</th><th>การใช้งาน</th></tr>
+    <tr><td><b>VCSEL</b></td><td>Vertical-Cavity Surface-Emitting Laser</td><td>MMF 850 nm ราคาถูก ผลิตง่าย</td></tr>
+    <tr><td><b>DFB</b></td><td>Distributed Feedback Laser</td><td>SMF 1310/1550 nm ความถี่เสถียร</td></tr>
+    <tr><td><b>EML</b></td><td>Electro-absorption Modulated Laser</td><td>SMF ความเร็วสูง 100G+/lane เป็นตัวสำคัญในยุค 800G/1.6T</td></tr>
+    <tr><td><b>Tunable</b></td><td>Tunable DBR / DFB array</td><td>Coherent DWDM เปลี่ยนความยาวคลื่นได้ด้วยซอฟต์แวร์</td></tr>
+  </table>
+
+  <h3>5. การขยายสัญญาณ (Optical Amplification)</h3>
+  <p><b>EDFA (Erbium-Doped Fiber Amplifier)</b> ใช้แก้วเจืออิเทอร์เบียมสูบด้วยแสง 980 nm เพื่อขยายสัญญาณในย่าน C-band <b>โดยไม่ต้องแปลงเป็นไฟฟ้าก่อน</b> — จุดเปลี่ยนใหญ่ของวงการทศวรรษ 1990 ที่ทำให้สายใต้ทะเลระยะพันกิโลเมตรเป็นไปได้</p>
+
+  <h3>6. ข้อจำกัดทางฟิสิกส์</h3>
+  <ul>
+    <li><b>Attenuation</b> — การสูญเสียพลังงานประมาณ 0.2 dB/กม. ที่ 1550 nm</li>
+    <li><b>Chromatic dispersion</b> — ความยาวคลื่นต่างกันเดินทางเร็วไม่เท่ากัน ทำให้พัลส์บานออก</li>
+    <li><b>Polarization mode dispersion</b> — ความไม่สมบูรณ์ของแก้วทำให้สองโพลาไรเซชันมาถึงต่างเวลา</li>
+    <li><b>Nonlinear effects</b> — เมื่อกำลังแสงสูงมาก จะเกิดผลกระทบแบบ Kerr effect, Raman scattering</li>
+  </ul>
+  <p style="color:var(--muted);font-size:13px">DSP ในทรานซีฟเวอร์สมัยใหม่แก้ไขปัญหาเหล่านี้ทั้งหมดแบบเรียลไทม์ ทำให้ส่ง 800 Gbps ผ่านสายเส้นเดียวระยะ 80+ กม. ได้</p>
 </section>
 
 <!-- FLOW -->
 <section id="flow">
-  <h2>Signal flow — click a stage</h2>
-  <p>Follow a single bit as it leaves a server NIC, becomes light, crosses the fabric, and becomes electricity again.</p>
+  <h2>เส้นทางของสัญญาณ — คลิกแต่ละขั้น</h2>
+  <p>ติดตามบิตข้อมูล 1 บิตจากเซิร์ฟเวอร์ NIC ถูกแปลงเป็นแสง ข้ามแฟบริก และกลับมาเป็นไฟฟ้าที่ปลายทาง</p>
 
   <div class="flow">
     <div class="flow-stages" id="stages"></div>
-    <div class="stage-detail" id="stageDetail">Click any stage above to see what happens there.</div>
+    <div class="stage-detail" id="stageDetail">คลิกขั้นตอนด้านบนเพื่อดูว่าเกิดอะไรขึ้นในจุดนั้น</div>
   </div>
 </section>
 
 <!-- CABLE -->
 <section id="cable">
-  <h2>Anatomy of a fiber — hover the layers</h2>
+  <h2>โครงสร้างของสายไฟเบอร์ — ชี้ที่ชั้นต่างๆ</h2>
   <div class="cable-wrap">
     <svg class="cable-svg" viewBox="0 0 520 300">
       <defs>
@@ -271,32 +345,32 @@
       <circle class="cable-layer" data-layer="core" cx="260" cy="150" r="14" fill="url(#core)"/>
       <text x="260" y="154" text-anchor="middle" font-size="10" fill="#05070d" font-weight="700">core</text>
     </svg>
-    <div class="layer-info" id="layerInfo">Hover or tap a ring to learn about that layer.</div>
+    <div class="layer-info" id="layerInfo">ชี้หรือแตะวงกลมเพื่อเรียนรู้เกี่ยวกับชั้นนั้น</div>
   </div>
 </section>
 
 <!-- DC USE -->
 <section id="dc">
-  <h2>Where fiber lives in a data center</h2>
+  <h2>ไฟเบอร์อยู่ตรงไหนบ้างในดาต้าเซ็นเตอร์?</h2>
   <div class="grid cols-2">
     <div class="card">
-      <h3>Intra-rack (DAC / AOC)</h3>
-      <p>Server ↔ ToR switch, &lt;3m. Often copper DAC, but 800G has pushed active optical cables (AOC) with VCSELs inside the plug.</p>
+      <h3>ภายในแร็ค (DAC / AOC)</h3>
+      <p>เซิร์ฟเวอร์ ↔ สวิตช์ ToR ระยะน้อยกว่า 3 เมตร เดิมใช้สายทองแดง DAC แต่ยุค 800G ดันให้ต้องใช้ AOC (Active Optical Cable) ที่ฝัง VCSEL ในหัวเสียบ</p>
       <span class="tag">VCSEL 850nm</span><span class="tag">MMF OM4/5</span>
     </div>
     <div class="card">
-      <h3>Intra-row / leaf-spine</h3>
-      <p>Parallel SMF or MMF between ToR, leaf, and spine switches. MPO-12/16 ribbons carry 4×200G or 8×100G lanes.</p>
+      <h3>ภายในแถว (Leaf-Spine)</h3>
+      <p>SMF หรือ MMF ขนานระหว่าง ToR, Leaf และ Spine ใช้ขั้ว MPO-12/16 ส่งหลายเลน 4×200G หรือ 8×100G</p>
       <span class="tag">QSFP-DD</span><span class="tag">OSFP</span><span class="tag alt">PAM4</span>
     </div>
     <div class="card">
-      <h3>AI fabric (GPU clusters)</h3>
-      <p>NVIDIA GB200 / H100 pods connect GPUs via InfiniBand NDR/XDR or 800G Ethernet. A single 100k-GPU cluster can burn through ~1M transceivers.</p>
+      <h3>แฟบริก AI (GPU Cluster)</h3>
+      <p>NVIDIA GB200 / H100 pod เชื่อม GPU ด้วย InfiniBand NDR/XDR หรือ 800G Ethernet คลัสเตอร์ 100,000 GPU หนึ่งชุดต้องใช้ทรานซีฟเวอร์ ~1 ล้านตัว</p>
       <span class="tag warn">800G / 1.6T</span><span class="tag alt">Co-packaged optics (CPO)</span>
     </div>
     <div class="card">
-      <h3>Data Center Interconnect (DCI)</h3>
-      <p>Between buildings or metro regions: coherent optics (400ZR, 800ZR) over SMF, often DWDM with 80+ wavelengths on one fiber pair.</p>
+      <h3>เชื่อมระหว่างดาต้าเซ็นเตอร์ (DCI)</h3>
+      <p>ระหว่างอาคารหรือเมือง ใช้ coherent optics (400ZR, 800ZR) บน SMF มักส่งแบบ DWDM ที่มี 80+ ความยาวคลื่นในสายเส้นเดียว</p>
       <span class="tag">Coherent DSP</span><span class="tag">DWDM</span>
     </div>
   </div>
@@ -304,8 +378,8 @@
 
 <!-- DWDM -->
 <section id="dwdm">
-  <h2>DWDM — many colors of light on one fiber</h2>
-  <p>Dense Wavelength Division Multiplexing sends dozens of independent data streams down a single fiber pair, each on a different wavelength (λ). A <b>ROADM</b> (Reconfigurable Optical Add-Drop Multiplexer) lets operators add, drop, or redirect individual wavelengths without touching the others.</p>
+  <h2>DWDM — หลายสีของแสงในสายเดียว</h2>
+  <p>Dense Wavelength Division Multiplexing ส่งข้อมูลหลายสตรีมพร้อมกันผ่านสายไฟเบอร์คู่เดียว โดยแต่ละสตรีมใช้ความยาวคลื่น (λ) ที่ต่างกัน <b>ROADM</b> (Reconfigurable Optical Add-Drop Multiplexer) ให้ผู้ให้บริการเพิ่ม ลบ หรือเปลี่ยนเส้นทางความยาวคลื่นเฉพาะโดยไม่กระทบตัวอื่น</p>
 
   <div class="flow">
     <svg viewBox="0 0 720 280" style="width:100%; max-width:720px; display:block; margin:0 auto">
@@ -316,88 +390,109 @@
           <stop offset="1" stop-color="#0f1530"/>
         </linearGradient>
       </defs>
-
-      <!-- Transmitters -->
       <g id="txs"></g>
-
-      <!-- MUX -->
       <rect x="200" y="60" width="60" height="160" rx="8" fill="#0f1530" stroke="#4cc9ff"/>
       <text x="230" y="145" text-anchor="middle" font-size="11" fill="#e6ecff">MUX</text>
-
-      <!-- Fiber -->
       <rect x="260" y="130" width="200" height="20" fill="url(#fibergrad)" stroke="#4cc9ff"/>
-      <text x="360" y="170" text-anchor="middle" font-size="11" fill="#8a97c7">single fiber · DWDM</text>
-
-      <!-- EDFA -->
+      <text x="360" y="170" text-anchor="middle" font-size="11" fill="#8a97c7">สายเส้นเดียว · DWDM</text>
       <circle cx="360" cy="140" r="14" fill="#ffb454"/>
       <text x="360" y="144" text-anchor="middle" font-size="9" fill="#05070d" font-weight="700">EDFA</text>
-
-      <!-- DEMUX -->
       <rect x="460" y="60" width="60" height="160" rx="8" fill="#0f1530" stroke="#b892ff"/>
       <text x="490" y="145" text-anchor="middle" font-size="11" fill="#e6ecff">DEMUX</text>
-
-      <!-- Receivers -->
       <g id="rxs"></g>
     </svg>
 
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px" id="dwdmLegend"></div>
-    <div class="stage-detail" id="dwdmDetail">Click a wavelength to learn what it carries.</div>
+    <div class="stage-detail" id="dwdmDetail">คลิกความยาวคลื่นเพื่อดูว่าส่งอะไร</div>
   </div>
 
   <div class="grid cols-3" style="margin-top:20px">
     <div class="card">
       <h3>C-band</h3>
-      <p>1530–1565 nm. Lowest-loss window in silica fiber. Where most long-haul and 400ZR/800ZR traffic lives. ~96 × 50 GHz channels.</p>
+      <p>1530–1565 nm หน้าต่างที่แก้วสูญเสียต่ำที่สุด ใช้สำหรับ long-haul และ 400ZR/800ZR บรรจุได้ ~96 ช่องสัญญาณที่ระยะห่าง 50 GHz</p>
     </div>
     <div class="card">
       <h3>EDFA</h3>
-      <p>Erbium-Doped Fiber Amplifier. Boosts all C-band wavelengths at once — optically — without converting to electrical. Enables 80+ km spans.</p>
+      <p>ขยายทุกความยาวคลื่นในย่าน C-band พร้อมกัน<b>โดยไม่ต้องแปลงเป็นไฟฟ้า</b> ทำให้ระยะส่งเกิน 80 กม. ได้</p>
     </div>
     <div class="card">
       <h3>ROADM</h3>
-      <p>Uses wavelength-selective switches (WSS) to route individual λ's. Lets operators reconfigure the optical network in software.</p>
+      <p>ใช้ Wavelength-Selective Switch (WSS) กำหนดเส้นทางแต่ละ λ ทำให้ผู้ให้บริการสามารถปรับโทโพโลยีเครือข่ายแสงด้วยซอฟต์แวร์</p>
     </div>
   </div>
 </section>
 
 <!-- SUPPLY CHAIN -->
 <section id="supply">
-  <h2>Supply chain — who sits where?</h2>
-  <p>Click a layer to see the players. Materials flow top-to-bottom; a single transceiver plug involves all of them.</p>
+  <h2>ห่วงโซ่อุปทาน — ใครอยู่ที่ไหน?</h2>
+  <p>อุตสาหกรรมไฟเบอร์ออปติกมีการแบ่งงานที่ซับซ้อนและพึ่งพากันมาก โมดูลทรานซีฟเวอร์ 1 ตัวอาจมีชิ้นส่วนจาก 6–8 บริษัทในหลายประเทศ คลิกแต่ละชั้นเพื่อดูผู้เล่นหลัก</p>
 
   <div class="flow">
     <div id="supplyLayers"></div>
-    <div class="stage-detail" id="supplyDetail">Click any layer above.</div>
+    <div class="stage-detail" id="supplyDetail">คลิกชั้นใดก็ได้ด้านบน</div>
   </div>
 
-  <div class="card" style="margin-top:20px">
-    <h3>The AI squeeze</h3>
-    <p>A single 100,000-GPU cluster burns through roughly <b>800,000–1,000,000 optical transceivers</b>. Every GPU-to-switch hop is an optical link, and each hop needs two modules (one at each end). That has driven:</p>
+  <h3 style="margin-top:30px">ทำไม AI ถึงเปลี่ยนเกมทั้งหมด?</h3>
+  <div class="callout">
+    <p>คลัสเตอร์ GPU 100,000 ตัวหนึ่งชุดต้องใช้ทรานซีฟเวอร์ประมาณ <b>800,000 – 1,000,000 ตัว</b> ทุกการเชื่อมต่อ GPU-to-switch คือลิงก์แสง และทุกลิงก์ต้องการโมดูล 2 ตัว (ปลายละตัว) ผลคือ:</p>
     <ul>
-      <li><b>EML laser shortage</b> — only Coherent, Lumentum, and a few Chinese suppliers can make them at scale.</li>
-      <li><b>Fiber count explosion</b> — hyperscalers are buying 864-fiber and 3,456-fiber cables from Corning and YOFC.</li>
-      <li><b>LPO & CPO push</b> — to cut the ~30W/port power of 800G DSP-based optics, Broadcom and NVIDIA are racing toward co-packaged optics.</li>
+      <li><b>EML laser ขาดแคลน</b> — มีแค่ Coherent, Lumentum และผู้ผลิตจีนไม่กี่รายที่ทำได้ในปริมาณมาก</li>
+      <li><b>Fiber count ระเบิด</b> — ไฮเปอร์สเกลเลอร์สั่งสายเคเบิลไฟเบอร์ 864 และ 3,456 เส้นจาก Corning และ YOFC</li>
+      <li><b>LPO & CPO เร่งพัฒนา</b> — เพื่อลดการใช้พลังงาน ~30W/พอร์ตของ 800G DSP-based optics Broadcom และ NVIDIA กำลังแข่งกันผลักดัน Co-Packaged Optics</li>
+      <li><b>กำลังการผลิตเต็มทุกโรงงาน</b> — Innolight, Eoptolink ทำ OT (ล่วงเวลา) ต่อเนื่องตั้งแต่ปลายปี 2023 ถึงปัจจุบัน</li>
     </ul>
   </div>
+
+  <h3>ศูนย์กลางการผลิตที่สำคัญในโลก</h3>
+  <div class="grid cols-2">
+    <div class="card">
+      <h4>🇺🇸 อเมริกา</h4>
+      <p><b>โรงงาน InP และ DSP</b> — Coherent (Sherman, TX), Lumentum (San Jose), Marvell, Broadcom (Palo Alto) และการประกอบระดับ R&D ยังอยู่ในอเมริกา สำคัญด้านเทคโนโลยีแต่ปริมาณน้อย</p>
+    </div>
+    <div class="card">
+      <h4>🇨🇳 จีน</h4>
+      <p><b>โรงงานประกอบโมดูลใหญ่ที่สุดในโลก</b> — Innolight (Suzhou), Eoptolink (Chengdu), HG Genuine (Wuhan), Accelink ผลิตทรานซีฟเวอร์กว่า 60% ของตลาดดาต้าคอมทั่วโลก</p>
+    </div>
+    <div class="card">
+      <h4>🇹🇭 ไทย</h4>
+      <p><b>Fabrinet</b> — โรงงานคลีนรูมขนาดใหญ่ในปทุมธานี ประกอบโมดูล Coherent, Lumentum, NVIDIA และเป็นหนึ่งในผู้รับจ้างผลิตอุปกรณ์ออปติกที่สำคัญที่สุดของโลก</p>
+    </div>
+    <div class="card">
+      <h4>🇯🇵 ญี่ปุ่น</h4>
+      <p><b>แก้วและเลเซอร์คุณภาพสูง</b> — Sumitomo Electric, Furukawa, Fujikura ผลิตไฟเบอร์และเลเซอร์ InP คุณภาพสูงสุด มักใช้ในสายใต้ทะเลและเครือข่าย premium</p>
+    </div>
+    <div class="card">
+      <h4>🇹🇼 ไต้หวัน</h4>
+      <p><b>TSMC, GlobalFoundries</b> — โรงงานผลิตชิป DSP สำหรับ Marvell และ Broadcom รวมถึง silicon photonics ของ Intel/Ayar Labs</p>
+    </div>
+    <div class="card">
+      <h4>🇪🇺 ยุโรป</h4>
+      <p><b>Prysmian (อิตาลี), Nokia (ฟินแลนด์)</b> ผู้นำด้าน submarine cable และระบบ DWDM EFFECT Photonics (เนเธอร์แลนด์) ทำ tunable lasers</p>
+    </div>
+  </div>
+
+  <h3>ขั้นตอนการผลิตทรานซีฟเวอร์ 1 ตัว</h3>
+  <ol style="color:var(--muted);font-size:14px">
+    <li><b>Wafer growth</b> — ผู้ผลิต InP (Coherent, Sumitomo) ปลูก epitaxial wafer จากธาตุ indium + phosphorus</li>
+    <li><b>Chip fabrication</b> — สลักเลเซอร์ DFB/EML ลงบนเวเฟอร์ในคลีนรูมคลาส 10</li>
+    <li><b>DSP tape-out</b> — Marvell/Broadcom ออกแบบแล้วสั่ง TSMC ผลิตชิป DSP บน 5nm</li>
+    <li><b>PCB & optical packaging</b> — โรงประกอบโมดูลรับชิ้นส่วนทั้งหมดมาเชื่อมต่อ เรียงเลนส์ จัด alignment ด้วย active alignment robot</li>
+    <li><b>Burn-in & test</b> — ทดสอบ 24–72 ชั่วโมงที่อุณหภูมิสูงเพื่อคัดโมดูลที่จะเสียเร็วออก</li>
+    <li><b>Ship to customer</b> — ส่งไปยังไฮเปอร์สเกลเลอร์หรือ OEM สวิตช์ (Cisco, Arista, NVIDIA)</li>
+  </ol>
 </section>
 
 <!-- COMPANIES -->
 <section id="companies">
-  <h2>Who builds the photonics?</h2>
-  <p>The fiber optic supply chain splits into <b>components</b> (lasers, modulators, DSPs), <b>modules</b> (the pluggable transceiver), <b>fiber cable</b> itself, and <b>systems</b> (switches, line systems).</p>
+  <h2>บริษัทหลักในอุตสาหกรรม</h2>
+  <p>จัดกลุ่มตามบทบาทในห่วงโซ่อุปทาน คลิก "สินค้าหลัก" และ "ทำไมถึงสำคัญ" เพื่อดูรายละเอียด</p>
 
   <div class="grid cols-2" id="companyGrid"></div>
 </section>
 
-<!-- QUIZ -->
-<section id="quiz">
-  <h2>Quick quiz</h2>
-  <div id="quizHost"></div>
-</section>
-
 </main>
 
-<footer>Built as an interactive explainer. Data accurate as of 2025–2026. Not investment advice.</footer>
+<footer>สร้างเป็นคู่มืออธิบายเชิงโต้ตอบ · ข้อมูลถึงปี 2025–2026 · ไม่ใช่คำแนะนำการลงทุน</footer>
 
 <script>
 // Tabs
@@ -412,12 +507,12 @@ nav.addEventListener('click', e => {
 
 // Signal flow
 const stages = [
-  { ico: '🖥️', title: 'NIC', sub: 'server', detail: '<b>Network Interface Card:</b> the CPU hands an Ethernet frame to the NIC. SerDes lanes turn parallel data into high-speed electrical signals (e.g. 8 × 100 Gb/s PAM4 = 800 Gb/s).'},
-  { ico: '🔌', title: 'Transceiver', sub: 'electrical→optical', detail: '<b>Pluggable optics (QSFP-DD / OSFP):</b> a laser driver modulates a DFB, EML, or silicon-photonic Mach-Zehnder modulator. The light now encodes the bits. Coherent modules also add phase and polarization encoding.'},
-  { ico: '🧵', title: 'Fiber', sub: 'photons traveling', detail: '<b>Glass fiber:</b> photons bounce down the core via total internal reflection, losing only ~0.2 dB per km at 1550 nm. MPO connectors carry 8, 12, or 16 fibers in one plug for parallel lanes.'},
-  { ico: '🔀', title: 'Switch', sub: 'leaf / spine', detail: '<b>Top-of-Rack → Leaf → Spine:</b> at each hop, optics convert light back to electrical, a switch ASIC (Broadcom Tomahawk, NVIDIA Spectrum) routes the packet, then new optics re-transmit. Co-packaged optics (CPO) aims to skip the pluggable step.'},
-  { ico: '📡', title: 'Photodiode', sub: 'optical→electrical', detail: '<b>Receive side:</b> a PIN or APD photodiode converts photons to current, a TIA amplifies it, and a DSP equalizes and recovers the clock. Coherent receivers also demodulate phase and polarization.'},
-  { ico: '🖥️', title: 'NIC', sub: 'destination', detail: '<b>Remote NIC:</b> the frame lands in host memory via DMA/RDMA. Total one-way latency across a DC fabric is typically 1–5 µs — most of which is in the switch ASICs, not the fiber.'}
+  { ico: '🖥️', title: 'NIC', sub: 'เซิร์ฟเวอร์', detail: '<b>Network Interface Card:</b> CPU ส่ง Ethernet frame ให้ NIC ซึ่งใช้ SerDes lanes แปลงข้อมูลขนานเป็นสัญญาณไฟฟ้าความเร็วสูง เช่น 8 เลน × 100 Gb/s PAM4 = 800 Gb/s'},
+  { ico: '🔌', title: 'Transceiver', sub: 'ไฟฟ้า→แสง', detail: '<b>โมดูลเสียบถอด (QSFP-DD / OSFP):</b> วงจรขับเลเซอร์มอดูเลต DFB, EML หรือ Mach-Zehnder modulator บน silicon photonics ทำให้แสงเข้ารหัสข้อมูล โมดูลแบบ coherent ยังเข้ารหัสเฟสและโพลาไรเซชันเพิ่ม'},
+  { ico: '🧵', title: 'สายไฟเบอร์', sub: 'แสงเดินทาง', detail: '<b>สายแก้ว:</b> โฟตอนกระเด้งไปตามแกนด้วยการสะท้อนกลับหมด สูญเสียเพียง 0.2 dB/กม. ที่ 1550 nm ขั้ว MPO บรรจุสาย 8, 12 หรือ 16 เส้นในหัวเดียวเพื่อส่งขนาน'},
+  { ico: '🔀', title: 'สวิตช์', sub: 'leaf / spine', detail: '<b>Top-of-Rack → Leaf → Spine:</b> ทุก hop ทรานซีฟเวอร์แปลงแสงกลับเป็นไฟฟ้า ให้ ASIC สวิตช์ (Broadcom Tomahawk, NVIDIA Spectrum) routing packet แล้วส่งออกด้วยแสงใหม่ Co-Packaged Optics (CPO) พยายามข้ามขั้นตอนโมดูลเสียบถอด'},
+  { ico: '📡', title: 'Photodiode', sub: 'แสง→ไฟฟ้า', detail: '<b>ฝั่งรับ:</b> PIN หรือ APD photodiode แปลงโฟตอนเป็นกระแส TIA ขยาย แล้ว DSP ทำ equalization และ clock recovery ตัวรับ coherent ยัง demodulate เฟสและโพลาไรเซชันอีก'},
+  { ico: '🖥️', title: 'NIC ปลายทาง', sub: 'ที่หมาย', detail: '<b>NIC ฝั่งปลายทาง:</b> frame เข้าหน่วยความจำ host ผ่าน DMA/RDMA latency รวม one-way ในแฟบริก DC อยู่ที่ 1–5 μs ส่วนใหญ่อยู่ที่ switch ASIC ไม่ใช่สายไฟเบอร์'}
 ];
 const stagesEl = document.getElementById('stages');
 const detail = document.getElementById('stageDetail');
@@ -441,12 +536,12 @@ stages.forEach((s, i) => {
 
 // Cable layers
 const layers = {
-  core:     { name: 'Core (8–50 µm)', text: 'The pure glass strand where the light actually travels. Single-mode cores are just 8–10 µm — smaller than a red blood cell.' },
-  cladding: { name: 'Cladding (125 µm)', text: 'Glass with a slightly lower refractive index. The abrupt index drop at the core–cladding boundary is what produces total internal reflection.' },
-  coating:  { name: 'Acrylate coating', text: 'A soft polymer (~250 µm) applied during fiber drawing. Protects the glass surface from microcracks that would cause the fiber to snap.' },
-  buffer:   { name: 'Buffer tube', text: 'A loose plastic tube that isolates the fiber from mechanical stress and temperature changes on the outer cable.' },
-  strength: { name: 'Strength member', text: 'Aramid (Kevlar) yarn or fiberglass rods that take the tensile load when the cable is pulled through conduits.' },
-  jacket:   { name: 'Outer jacket', text: 'PVC, LSZH, or plenum-rated polymer. Provides flame, water, and rodent protection. Color codes the fiber type (yellow=SMF, aqua=OM4).' },
+  core:     { name: 'แกน (8–50 μm)', text: 'เส้นแก้วบริสุทธิ์ที่แสงเดินทางจริง แกน single-mode เล็กเพียง 8–10 μm เล็กกว่าเม็ดเลือดแดง' },
+  cladding: { name: 'เปลือก (125 μm)', text: 'แก้วที่มีดัชนีหักเหต่ำกว่าแกนเล็กน้อย การเปลี่ยนแปลงดัชนีที่ขอบแกน-เปลือกคือตัวทำให้เกิดการสะท้อนกลับหมด' },
+  coating:  { name: 'เคลือบอะคริเลต', text: 'โพลิเมอร์อ่อน (~250 μm) ทาขณะดึงไฟเบอร์จากเตา ปกป้องผิวแก้วจากรอยแตกขนาดเล็กที่จะทำให้สายขาด' },
+  buffer:   { name: 'ท่อบัฟเฟอร์', text: 'ท่อพลาสติกแบบหลวมที่แยกไฟเบอร์ออกจากความเครียดทางกลและอุณหภูมิของสายชั้นนอก' },
+  strength: { name: 'ชั้นเสริมกำลัง', text: 'เส้นอรามิด (Kevlar) หรือแท่งไฟเบอร์กลาสที่รับแรงดึงเมื่อลากสายผ่านท่อร้อย' },
+  jacket:   { name: 'ปลอกหุ้มภายนอก', text: 'PVC, LSZH หรือโพลิเมอร์เกรด plenum ป้องกันไฟ น้ำ และสัตว์กัดแทะ สีของปลอกบ่งบอกชนิดไฟเบอร์ (เหลือง=SMF, ฟ้าอมเขียว=OM4)' },
 };
 const layerInfo = document.getElementById('layerInfo');
 document.querySelectorAll('.cable-layer').forEach(el => {
@@ -458,158 +553,13 @@ document.querySelectorAll('.cable-layer').forEach(el => {
   el.addEventListener('click', show);
 });
 
-// Companies
-const companies = [
-  {
-    name: 'Coherent Corp.',
-    ticker: 'NASDAQ: COHR',
-    logo: 'C', color: '#4cc9ff',
-    role: 'Components + modules',
-    summary: 'Formed from the II-VI + Coherent merger (2022). A vertically integrated photonics giant — they make the lasers, the indium phosphide wafers, and the finished transceivers.',
-    products: ['Indium phosphide (InP) lasers & EMLs', '400G / 800G / 1.6T transceivers', 'ROADM & optical amplifiers', 'Industrial & medical lasers'],
-    why: 'One of only a handful of companies that can supply EML lasers at the volume needed for the 800G AI-fabric buildout. A key beneficiary of hyperscaler AI capex.'
-  },
-  {
-    name: 'Lumentum',
-    ticker: 'NASDAQ: LITE',
-    logo: 'L', color: '#b892ff',
-    role: 'Components + modules',
-    summary: 'Spun out of JDSU in 2015. Historically strongest in telecom lasers and ROADMs; acquired Cloud Light (2023) and NeoPhotonics (2022) to push into datacom transceivers.',
-    products: ['EML & DFB lasers', 'ROADMs & wavelength-selective switches', '800G transceivers (post Cloud Light)', '3D sensing VCSELs (iPhone Face ID)'],
-    why: 'The Cloud Light acquisition gave them a direct foothold in hyperscaler datacom optics. Also supplies pump lasers for EDFAs used in DCI and submarine cables.'
-  },
-  {
-    name: 'YOFC (长飞)',
-    ticker: 'SSE: 601869 / HK: 6869',
-    logo: 'Y', color: '#5cf29a',
-    role: 'Fiber & cable',
-    summary: 'Yangtze Optical Fibre and Cable Joint Stock — China\'s largest optical fiber preform, fiber, and cable manufacturer. Joint venture roots with Draka/Prysmian.',
-    products: ['Optical fiber preforms', 'Single-mode & bend-insensitive fiber', 'Ribbon & high-density DC cables', 'Submarine cable'],
-    why: 'Dominates China\'s domestic market and is a top-3 global fiber supplier. Critical to the physical layer — the actual glass that hyperscalers install by the millions of kilometers.'
-  },
-  {
-    name: 'Corning',
-    ticker: 'NYSE: GLW',
-    logo: 'G', color: '#ffb454',
-    role: 'Fiber & cable',
-    summary: 'Invented low-loss optical fiber in 1970. Still the benchmark for SMF-28 single-mode fiber and a leader in high-density data center cabling.',
-    products: ['SMF-28 & ClearCurve fiber', 'EDGE / rapid MTP solutions', 'Hollow-core fiber (research)', 'Specialty glass, Gorilla Glass'],
-    why: 'Signed multi-year deals with hyperscalers in 2024–2025 as AI build-outs drove a shortage of high-count fiber cables.'
-  },
-  {
-    name: 'Marvell',
-    ticker: 'NASDAQ: MRVL',
-    logo: 'M', color: '#ff6b9d',
-    role: 'DSP silicon',
-    summary: 'Not an optics company per se, but Marvell\'s DSPs sit inside most 400G/800G coherent and PAM4 transceivers, recovering the signal after it crosses the fiber.',
-    products: ['Coherent DSPs (400ZR, 800ZR)', 'PAM4 DSPs for datacom', 'Inphi (acquired 2021) optical products', 'Custom ASICs for hyperscalers'],
-    why: 'Their DSPs are arguably the brain of modern optics. Competing with Broadcom and increasingly with in-house hyperscaler silicon.'
-  },
-  {
-    name: 'Broadcom',
-    ticker: 'NASDAQ: AVGO',
-    logo: 'B', color: '#e53935',
-    role: 'DSPs, VCSELs, CPO',
-    summary: 'Dominates switch ASICs (Tomahawk, Jericho) and supplies VCSELs, PAM4 DSPs, and is leading the charge on co-packaged optics for next-gen switches.',
-    products: ['Tomahawk 5 / 6 switch ASICs', 'PAM4 DSPs', 'VCSEL arrays', 'Co-packaged optics (CPO) reference designs'],
-    why: 'Controls the switch ASIC + DSP combination that defines most DC fabric economics. CPO could eventually eat the pluggable transceiver market.'
-  },
-  {
-    name: 'Innolight (旭创)',
-    ticker: 'SZSE: 300308',
-    logo: 'I', color: '#00c6ff',
-    role: 'Modules',
-    summary: 'A Chinese transceiver giant, consistently the #1 or #2 global supplier of datacom optical modules by volume. Primary 800G supplier to NVIDIA / hyperscalers.',
-    products: ['400G / 800G QSFP-DD, OSFP', '1.6T transceivers', 'LPO (linear pluggable optics)', 'Silicon photonics modules'],
-    why: 'If you buy an NVIDIA DGX or build a GPU cluster, there is a very high chance Innolight modules are plugged into the switches.'
-  },
-  {
-    name: 'Fabrinet',
-    ticker: 'NYSE: FN',
-    logo: 'F', color: '#9ec7ff',
-    role: 'Contract manufacturer',
-    summary: 'Thailand-based precision optics and electro-mechanical contract manufacturer. Builds finished transceivers and line cards for Coherent, Lumentum, NVIDIA, Cisco.',
-    products: ['Transceiver assembly', 'Optical line system integration', 'Precision optics, prisms, etc.', 'Automotive LiDAR'],
-    why: 'The hidden backbone — much of the "Made by Lumentum / Coherent" optics are physically built in Fabrinet\'s Thai cleanrooms.'
-  },
-  {
-    name: 'Cisco / Acacia',
-    ticker: 'NASDAQ: CSCO',
-    logo: 'A', color: '#1ba0e2',
-    role: 'Coherent modules + systems',
-    summary: 'Cisco acquired Acacia Communications in 2021 for $4.5B. Acacia pioneered coherent pluggables (CFP2-DCO, 400ZR) — now the optical arm inside Cisco\'s routing and DCI portfolio.',
-    products: ['400ZR / 400ZR+ pluggables', 'Bright ZR+ (amplified)', 'Silicon-photonic coherent engines', 'Cisco 8000 / NCS routers'],
-    why: 'Put coherent optics directly into routers, bypassing separate DWDM line systems. A major structural shift in DCI economics.'
-  },
-  {
-    name: 'NVIDIA',
-    ticker: 'NASDAQ: NVDA',
-    logo: 'N', color: '#76b900',
-    role: 'Systems + CPO',
-    summary: 'Not an optics vendor historically, but via Mellanox (2019) owns InfiniBand + Spectrum Ethernet and is now the largest single buyer of 800G/1.6T optics. Announced silicon-photonic switches in 2025.',
-    products: ['Quantum InfiniBand switches', 'Spectrum-X Ethernet', 'Quantum-X / Spectrum-X Photonics (CPO)', 'LinkX cables & transceivers'],
-    why: 'Sets the de facto spec for AI fabric optics. Their shift to co-packaged optics in 2025–2026 reshapes the entire transceiver market.'
-  },
-  {
-    name: 'HG Genuine (华工正源)',
-    ticker: 'SZSE: 000988 (parent)',
-    logo: 'H', color: '#ff7043',
-    role: 'Modules',
-    summary: 'Subsidiary of HGTECH. A major Chinese optical module maker with strong domestic hyperscaler relationships (Alibaba, Tencent, ByteDance) and growing 800G share.',
-    products: ['100G / 400G / 800G datacom optics', 'Access network optics (PON)', 'Coherent pluggables', 'Silicon photonics R&D'],
-    why: 'Part of the "China optical module cluster" that, together with Innolight, Eoptolink, and Accelink, supplies more than 50% of global datacom modules by volume.'
-  },
-  {
-    name: 'Eoptolink (新易盛)',
-    ticker: 'SZSE: 300502',
-    logo: 'E', color: '#ffd166',
-    role: 'Modules',
-    summary: 'Chengdu-based transceiver maker that went from a mid-tier supplier to a top-3 global 800G vendor on the back of the NVIDIA / Meta AI buildout.',
-    products: ['800G OSFP / QSFP-DD', '1.6T modules (2025)', 'LPO (linear pluggable optics)', '400ZR coherent modules'],
-    why: 'Its 2024 revenue roughly tripled as AI orders poured in. A bellwether stock for AI optics demand — moves sharply on hyperscaler capex signals.'
-  },
-  {
-    name: 'Ciena',
-    ticker: 'NYSE: CIEN',
-    logo: 'N', color: '#34d399',
-    role: 'Systems + coherent',
-    summary: 'Leader in coherent DWDM line systems and DCI platforms. Their WaveLogic DSPs power 400ZR+ and 800ZR coherent pluggables.',
-    products: ['WaveLogic coherent DSPs', '6500 / Waveserver DCI platforms', 'Routing & packet optical', 'Blue Planet software'],
-    why: 'Owns a huge share of the metro and long-haul DCI market, which is exploding as hyperscalers interconnect "AI data center campuses" across regions.'
-  },
-];
-const cg = document.getElementById('companyGrid');
-companies.forEach(c => {
-  const el = document.createElement('div');
-  el.className = 'card';
-  el.innerHTML = `
-    <div class="company-head">
-      <div class="company-logo" style="background:${c.color};color:#05070d">${c.logo}</div>
-      <div>
-        <h3>${c.name}</h3>
-        <div class="sub">${c.ticker} · ${c.role}</div>
-      </div>
-    </div>
-    <p>${c.summary}</p>
-    <details>
-      <summary>Key products</summary>
-      <ul>${c.products.map(p => `<li>${p}</li>`).join('')}</ul>
-    </details>
-    <details>
-      <summary>Why they matter</summary>
-      <p style="font-size:13px;color:var(--muted)">${c.why}</p>
-    </details>
-  `;
-  cg.appendChild(el);
-});
-
 // DWDM
 const wavelengths = [
-  { nm: 1530, color: '#8b5cf6', carries: 'Video streaming traffic to an edge CDN.' },
-  { nm: 1540, color: '#4cc9ff', carries: 'East-west GPU training gradients between two AI data centers.' },
-  { nm: 1550, color: '#5cf29a', carries: 'Database replication between primary and standby regions.' },
-  { nm: 1560, color: '#ffb454', carries: 'General internet transit (backbone IP traffic).' },
-  { nm: 1565, color: '#ff6b9d', carries: 'Spare / protection channel for auto-failover.' },
+  { nm: 1530, color: '#8b5cf6', carries: 'การสตรีมวิดีโอไปยัง CDN ขอบเครือข่าย' },
+  { nm: 1540, color: '#4cc9ff', carries: 'ข้อมูล gradient จากการเทรน GPU ระหว่างสองดาต้าเซ็นเตอร์ AI' },
+  { nm: 1550, color: '#5cf29a', carries: 'การ replicate ฐานข้อมูลจาก region หลักไป region สำรอง' },
+  { nm: 1560, color: '#ffb454', carries: 'ทราฟฟิกอินเทอร์เน็ตทั่วไป (backbone IP)' },
+  { nm: 1565, color: '#ff6b9d', carries: 'ช่องสัญญาณสำรองสำหรับ auto-failover' },
 ];
 const txs = document.getElementById('txs');
 const rxs = document.getElementById('rxs');
@@ -618,52 +568,26 @@ const dwdmDetail = document.getElementById('dwdmDetail');
 if (txs && rxs && legend) {
   wavelengths.forEach((w, i) => {
     const y = 70 + i * 30;
-    // TX box
-    const txBox = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    txBox.setAttribute('x', '100'); txBox.setAttribute('y', y - 10);
-    txBox.setAttribute('width', '80'); txBox.setAttribute('height', '20');
-    txBox.setAttribute('rx', '4'); txBox.setAttribute('fill', '#0f1530');
-    txBox.setAttribute('stroke', w.color);
-    txs.appendChild(txBox);
-    const txLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    txLabel.setAttribute('x', '140'); txLabel.setAttribute('y', y + 4);
-    txLabel.setAttribute('text-anchor', 'middle');
-    txLabel.setAttribute('font-size', '10'); txLabel.setAttribute('fill', w.color);
-    txLabel.textContent = w.nm + ' nm';
-    txs.appendChild(txLabel);
-    // line into mux
-    const lineIn = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    lineIn.setAttribute('x1', '180'); lineIn.setAttribute('y1', y);
-    lineIn.setAttribute('x2', '200'); lineIn.setAttribute('y2', 140);
-    lineIn.setAttribute('stroke', w.color); lineIn.setAttribute('stroke-width', '2');
-    txs.appendChild(lineIn);
-    // line out of demux
-    const lineOut = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    lineOut.setAttribute('x1', '520'); lineOut.setAttribute('y1', 140);
-    lineOut.setAttribute('x2', '540'); lineOut.setAttribute('y2', y);
-    lineOut.setAttribute('stroke', w.color); lineOut.setAttribute('stroke-width', '2');
-    rxs.appendChild(lineOut);
-    // RX box
-    const rxBox = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    rxBox.setAttribute('x', '540'); rxBox.setAttribute('y', y - 10);
-    rxBox.setAttribute('width', '80'); rxBox.setAttribute('height', '20');
-    rxBox.setAttribute('rx', '4'); rxBox.setAttribute('fill', '#0f1530');
-    rxBox.setAttribute('stroke', w.color);
-    rxs.appendChild(rxBox);
-    const rxLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    rxLabel.setAttribute('x', '580'); rxLabel.setAttribute('y', y + 4);
-    rxLabel.setAttribute('text-anchor', 'middle');
-    rxLabel.setAttribute('font-size', '10'); rxLabel.setAttribute('fill', w.color);
-    rxLabel.textContent = w.nm + ' nm';
-    rxs.appendChild(rxLabel);
+    const mk = (tag, attrs) => {
+      const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      for (const k in attrs) el.setAttribute(k, attrs[k]);
+      return el;
+    };
+    txs.appendChild(mk('rect', {x:100,y:y-10,width:80,height:20,rx:4,fill:'#0f1530',stroke:w.color}));
+    const txL = mk('text', {x:140,y:y+4,'text-anchor':'middle','font-size':10,fill:w.color});
+    txL.textContent = w.nm + ' nm'; txs.appendChild(txL);
+    txs.appendChild(mk('line', {x1:180,y1:y,x2:200,y2:140,stroke:w.color,'stroke-width':2}));
+    rxs.appendChild(mk('line', {x1:520,y1:140,x2:540,y2:y,stroke:w.color,'stroke-width':2}));
+    rxs.appendChild(mk('rect', {x:540,y:y-10,width:80,height:20,rx:4,fill:'#0f1530',stroke:w.color}));
+    const rxL = mk('text', {x:580,y:y+4,'text-anchor':'middle','font-size':10,fill:w.color});
+    rxL.textContent = w.nm + ' nm'; rxs.appendChild(rxL);
 
-    // legend chip
     const chip = document.createElement('button');
     chip.className = 'tag';
-    chip.style.cssText = `background:${w.color}22;color:${w.color};border:1px solid ${w.color};cursor:pointer;font-size:12px`;
+    chip.style.cssText = `background:${w.color}22;color:${w.color};border:1px solid ${w.color};cursor:pointer;font-size:12px;font-family:inherit`;
     chip.textContent = 'λ ' + w.nm + ' nm';
     chip.onclick = () => {
-      dwdmDetail.innerHTML = `<b style="color:${w.color}">${w.nm} nm channel</b><br>${w.carries}`;
+      dwdmDetail.innerHTML = `<b style="color:${w.color}">ช่อง ${w.nm} nm</b><br>${w.carries}`;
     };
     legend.appendChild(chip);
   });
@@ -672,39 +596,39 @@ if (txs && rxs && legend) {
 // Supply chain
 const supply = [
   {
-    name: 'Raw materials',
+    name: '1. วัตถุดิบตั้งต้น',
     color: '#8a97c7',
-    detail: '<b>Silica sand, germanium, indium, gallium, erbium.</b> Preforms are drawn from ultra-pure synthetic silica. Indium phosphide wafers are the substrate for C-band lasers.'
+    detail: '<b>ทรายซิลิกาความบริสุทธิ์สูง, เจอร์เมเนียม, อินเดียม, แกลเลียม, เอิร์บเบียม</b> ไฟเบอร์ดึงจาก preform ที่สังเคราะห์จากซิลิกาบริสุทธิ์พิเศษ ส่วนเวเฟอร์ InP (อินเดียมฟอสไฟด์) คือพื้นฐานของเลเซอร์ C-band ทั้งหมด'
   },
   {
-    name: 'Fiber & preform',
+    name: '2. ไฟเบอร์และสายเคเบิล',
     color: '#5cf29a',
-    detail: '<b>Corning, YOFC, Prysmian, Fujikura, Sumitomo, Furukawa.</b> Draw the fiber from preforms, then cable it into jackets. Corning & YOFC dominate hyperscaler SMF.'
+    detail: '<b>Corning (🇺🇸), YOFC (🇨🇳), Prysmian (🇮🇹), Fujikura (🇯🇵), Sumitomo (🇯🇵), Furukawa (🇯🇵)</b> ดึงไฟเบอร์จาก preform แล้วทำเป็นสายเคเบิล Corning และ YOFC ครองตลาด SMF สำหรับไฮเปอร์สเกลเลอร์'
   },
   {
-    name: 'Lasers & photonics',
+    name: '3. เลเซอร์และชิป photonics',
     color: '#4cc9ff',
-    detail: '<b>Coherent, Lumentum, Sumitomo, Mitsubishi, POET, Ayar Labs.</b> Fabricate EML, DFB, and VCSEL chips. InP fabs are the critical bottleneck for 800G/1.6T.'
+    detail: '<b>Coherent (🇺🇸), Lumentum (🇺🇸), Sumitomo (🇯🇵), Mitsubishi (🇯🇵), Accelink (🇨🇳), Source Photonics (🇨🇳), POET (🇨🇦), Ayar Labs (🇺🇸)</b> ผลิตชิปเลเซอร์ EML, DFB, VCSEL โรงงาน InP เป็นคอขวดสำคัญของ 800G/1.6T'
   },
   {
-    name: 'DSP silicon',
+    name: '4. ชิป DSP และ ASIC',
     color: '#b892ff',
-    detail: '<b>Marvell (Inphi), Broadcom, Ciena WaveLogic, NVIDIA (in-house).</b> The coherent or PAM4 DSP typically costs more than the lasers in a high-end module.'
+    detail: '<b>Marvell (เดิมคือ Inphi), Broadcom, Ciena (WaveLogic), NVIDIA (in-house), AMD (เดิมคือ Pensando)</b> ออกแบบ DSP แล้วส่ง TSMC ผลิต DSP coherent ต้นทุนสูงกว่าเลเซอร์ในโมดูล high-end'
   },
   {
-    name: 'Module assembly',
+    name: '5. ประกอบโมดูลทรานซีฟเวอร์',
     color: '#ffb454',
-    detail: '<b>Innolight, Eoptolink, HG Genuine, Accelink, Coherent, Lumentum (Cloud Light), Source Photonics, Fabrinet (contract).</b> Take chips + optics + DSP and package them into a QSFP-DD / OSFP plug.'
+    detail: '<b>Innolight (🇨🇳), Eoptolink (🇨🇳), HG Genuine (🇨🇳), Accelink (🇨🇳), Coherent, Lumentum (Cloud Light), Source Photonics, Fabrinet (🇹🇭 รับจ้างผลิต)</b> นำชิป + optics + DSP มาประกอบเป็นโมดูล QSFP-DD / OSFP ผู้ผลิตจีน 4 รายครองตลาดโลก'
   },
   {
-    name: 'Switches & systems',
+    name: '6. สวิตช์และระบบเครือข่าย',
     color: '#ff6b9d',
-    detail: '<b>NVIDIA, Arista, Cisco, Juniper, Nokia, Ciena, Huawei.</b> Buy transceivers and build the data center fabric or DCI line system around them.'
+    detail: '<b>NVIDIA (Mellanox), Arista, Cisco, Juniper, Nokia, Ciena, Huawei, H3C</b> ใช้ ASIC Broadcom Tomahawk/Jericho และทรานซีฟเวอร์ประกอบเป็นแพลตฟอร์มสวิตช์หรือระบบ DWDM/DCI'
   },
   {
-    name: 'Hyperscalers (end users)',
+    name: '7. ไฮเปอร์สเกลเลอร์ (ผู้ใช้งานปลายทาง)',
     color: '#e53935',
-    detail: '<b>Google, Microsoft, Meta, Amazon, ByteDance, Alibaba, xAI, Oracle.</b> Buy millions of modules per year. Increasingly designing their own switches and pushing on LPO / CPO to cut power.'
+    detail: '<b>Google, Microsoft, Meta, Amazon/AWS, ByteDance, Alibaba, Tencent, xAI, Oracle</b> ซื้อทรานซีฟเวอร์ปีละล้านตัว หลายรายเริ่มออกแบบสวิตช์เองและผลักดัน LPO/CPO เพื่อลดการใช้พลังงาน'
   },
 ];
 const supplyLayers = document.getElementById('supplyLayers');
@@ -733,70 +657,192 @@ if (supplyLayers) {
   });
 }
 
-// Quiz
-const questions = [
+// Companies
+const companies = [
   {
-    q: 'Which fiber type is used between data center buildings for long-distance coherent links?',
-    opts: ['Multimode OM4', 'Single-mode (SMF)', 'Copper DAC', 'Hollow-core MMF'],
-    a: 1,
-    why: 'Single-mode fiber has much lower loss and dispersion, allowing coherent DWDM links to span tens or hundreds of kilometers.'
+    name: 'Coherent Corp.',
+    ticker: 'NASDAQ: COHR',
+    country: '🇺🇸 อเมริกา',
+    logo: 'C', color: '#4cc9ff',
+    role: 'ชิ้นส่วน + โมดูล',
+    summary: 'เกิดจากการควบรวม II-VI + Coherent (2022) เป็นบริษัท photonics แบบ vertically integrated ผลิตตั้งแต่เลเซอร์ เวเฟอร์ InP จนถึงโมดูลทรานซีฟเวอร์สำเร็จรูป',
+    products: ['เลเซอร์ EML, DFB บน InP', 'ทรานซีฟเวอร์ 400G / 800G / 1.6T', 'ROADM และ optical amplifier', 'เลเซอร์อุตสาหกรรมและการแพทย์'],
+    why: 'หนึ่งในไม่กี่บริษัทที่ผลิตเลเซอร์ EML ได้ในปริมาณที่เพียงพอสำหรับการสร้างแฟบริก AI 800G เป็นผู้ได้ประโยชน์โดยตรงจาก AI capex ของไฮเปอร์สเกลเลอร์'
   },
   {
-    q: 'What does a DSP inside an 800G coherent transceiver mainly do?',
-    opts: ['Cool the laser', 'Recover the signal (equalize, demodulate, FEC)', 'Convert AC to DC', 'Store packets'],
-    a: 1,
-    why: 'Coherent DSPs equalize chromatic dispersion, demodulate QAM phase/polarization, and run forward error correction — they are the "brain" of the module.'
+    name: 'Lumentum',
+    ticker: 'NASDAQ: LITE',
+    country: '🇺🇸 อเมริกา',
+    logo: 'L', color: '#b892ff',
+    role: 'ชิ้นส่วน + โมดูล',
+    summary: 'แยกตัวจาก JDSU ในปี 2015 เดิมเก่ง telecom laser และ ROADM ซื้อกิจการ Cloud Light (2023) และ NeoPhotonics (2022) เพื่อเข้าตลาดทรานซีฟเวอร์ดาต้าคอม',
+    products: ['เลเซอร์ EML & DFB', 'ROADM และ WSS', 'ทรานซีฟเวอร์ 800G (ผ่าน Cloud Light)', 'VCSEL สำหรับ 3D sensing (Face ID ใน iPhone)'],
+    why: 'การซื้อ Cloud Light ทำให้เข้าตลาด datacom optics ของไฮเปอร์สเกลเลอร์โดยตรง นอกจากนี้ยังเป็นผู้จ่ายเลเซอร์ pump ให้ EDFA ที่ใช้ใน DCI และสายใต้ทะเล'
   },
   {
-    q: 'Which company was formed by the II-VI + Coherent merger in 2022?',
-    opts: ['Lumentum', 'Coherent Corp.', 'Innolight', 'Ciena'],
-    a: 1,
-    why: 'II-VI acquired Coherent and adopted the "Coherent Corp." name — now one of the largest vertically integrated photonics companies.'
+    name: 'YOFC (长飞光纤)',
+    ticker: 'SSE: 601869 / HK: 6869',
+    country: '🇨🇳 จีน',
+    logo: 'Y', color: '#5cf29a',
+    role: 'ไฟเบอร์ + เคเบิล',
+    summary: 'Yangtze Optical Fibre and Cable — ผู้ผลิต preform, ไฟเบอร์ และสายเคเบิลรายใหญ่ที่สุดของจีน มีรากฐานจาก joint venture กับ Draka/Prysmian',
+    products: ['Preform ไฟเบอร์ออปติก', 'Single-mode fiber และ bend-insensitive fiber', 'สายริบบอนและสายความหนาแน่นสูงสำหรับ DC', 'สายใต้ทะเล'],
+    why: 'ครองตลาดในประเทศจีนและเป็นหนึ่งใน 3 ผู้จำหน่ายไฟเบอร์รายใหญ่ที่สุดของโลก เป็นผู้ผลิตแก้วจริงๆ ที่ไฮเปอร์สเกลเลอร์ใช้วางเป็นล้านกิโลเมตร'
   },
   {
-    q: 'YOFC is best known for which part of the fiber supply chain?',
-    opts: ['DSP silicon', 'Switch ASICs', 'Optical fiber & cable', 'Transceiver DSPs'],
-    a: 2,
-    why: 'YOFC (Yangtze Optical Fibre and Cable) is China\'s largest — and one of the world\'s top — producers of the actual glass fiber and cable.'
+    name: 'Corning',
+    ticker: 'NYSE: GLW',
+    country: '🇺🇸 อเมริกา',
+    logo: 'G', color: '#ffb454',
+    role: 'ไฟเบอร์ + เคเบิล',
+    summary: 'เป็นผู้คิดค้นไฟเบอร์ออปติก low-loss ในปี 1970 ปัจจุบันยังเป็นมาตรฐานอ้างอิงของ SMF-28 single-mode fiber และเป็นผู้นำด้านสายเคเบิลความหนาแน่นสูงสำหรับ DC',
+    products: ['SMF-28 และ ClearCurve fiber', 'EDGE / MTP solution', 'Hollow-core fiber (งานวิจัย)', 'กระจกพิเศษ, Gorilla Glass'],
+    why: 'เซ็นสัญญาระยะยาวกับไฮเปอร์สเกลเลอร์ในปี 2024–2025 เพราะการสร้าง AI ทำให้สายเคเบิลไฟเบอร์จำนวนนับพันเส้นขาดตลาด'
   },
   {
-    q: 'What is the main promise of co-packaged optics (CPO)?',
-    opts: ['Cheaper fiber', 'Put optics next to the switch ASIC to cut power & latency', 'Replace glass with copper', 'Eliminate DSPs'],
-    a: 1,
-    why: 'By integrating optics directly with the switch ASIC, CPO dramatically reduces electrical trace length, cutting power consumption per bit at 1.6T+ speeds.'
+    name: 'Marvell',
+    ticker: 'NASDAQ: MRVL',
+    country: '🇺🇸 อเมริกา',
+    logo: 'M', color: '#ff6b9d',
+    role: 'ชิป DSP',
+    summary: 'ไม่ใช่บริษัท optics โดยตรง แต่ DSP ของ Marvell อยู่ในทรานซีฟเวอร์ coherent และ PAM4 400G/800G เกือบทุกตัว ทำหน้าที่กู้คืนสัญญาณหลังข้ามสายไฟเบอร์',
+    products: ['Coherent DSP (400ZR, 800ZR)', 'PAM4 DSP สำหรับดาต้าคอม', 'Inphi (ซื้อกิจการปี 2021)', 'ASIC สั่งทำสำหรับไฮเปอร์สเกลเลอร์'],
+    why: 'DSP ของเขาคือ "สมอง" ของ optics สมัยใหม่ แข่งขันกับ Broadcom และมีแนวโน้มเจอคู่แข่งในรูปของ custom silicon ที่ไฮเปอร์สเกลเลอร์ออกแบบเอง'
+  },
+  {
+    name: 'Broadcom',
+    ticker: 'NASDAQ: AVGO',
+    country: '🇺🇸 อเมริกา',
+    logo: 'B', color: '#e53935',
+    role: 'DSP, VCSEL, CPO',
+    summary: 'ครองตลาด switch ASIC (Tomahawk, Jericho) และผลิต VCSEL, PAM4 DSP รวมถึงเป็นผู้นำในการพัฒนา Co-Packaged Optics สำหรับสวิตช์รุ่นถัดไป',
+    products: ['Tomahawk 5 / 6 switch ASIC', 'PAM4 DSP', 'VCSEL array', 'Co-Packaged Optics (CPO) reference design'],
+    why: 'ควบคุมคอมโบ switch ASIC + DSP ที่กำหนดเศรษฐศาสตร์ของ DC fabric CPO อาจเปลี่ยนตลาดทรานซีฟเวอร์เสียบถอดได้ในระยะยาว'
+  },
+  {
+    name: 'Innolight (旭创)',
+    ticker: 'SZSE: 300308',
+    country: '🇨🇳 จีน',
+    logo: 'I', color: '#00c6ff',
+    role: 'ประกอบโมดูล',
+    summary: 'ยักษ์ใหญ่ผู้ผลิตทรานซีฟเวอร์ของจีน เป็นอันดับ 1 หรือ 2 ของโลกในแง่ปริมาณโมดูลดาต้าคอมมาหลายปี เป็นผู้จ่าย 800G หลักให้ NVIDIA และไฮเปอร์สเกลเลอร์',
+    products: ['400G / 800G QSFP-DD, OSFP', 'ทรานซีฟเวอร์ 1.6T', 'LPO (linear pluggable optics)', 'โมดูล silicon photonics'],
+    why: 'ถ้าคุณซื้อ NVIDIA DGX หรือสร้างคลัสเตอร์ GPU โมดูล Innolight อยู่ในสวิตช์ของคุณมีโอกาสสูงมาก'
+  },
+  {
+    name: 'Eoptolink (新易盛)',
+    ticker: 'SZSE: 300502',
+    country: '🇨🇳 จีน',
+    logo: 'E', color: '#ffd166',
+    role: 'ประกอบโมดูล',
+    summary: 'ผู้ผลิตทรานซีฟเวอร์จากเฉิงตู เดิมเป็น supplier ระดับกลาง ก้าวขึ้นเป็นท็อป 3 โลก 800G ในปี 2024–2025 จากการบูมของ AI ของ NVIDIA และ Meta',
+    products: ['800G OSFP / QSFP-DD', 'โมดูล 1.6T (2025)', 'LPO (linear pluggable optics)', 'โมดูล 400ZR coherent'],
+    why: 'รายได้ปี 2024 เพิ่มขึ้นเกือบ 3 เท่า เป็นหุ้น bellwether ของความต้องการ AI optics เคลื่อนไหวรุนแรงเมื่อไฮเปอร์สเกลเลอร์ประกาศ capex'
+  },
+  {
+    name: 'HG Genuine (华工正源)',
+    ticker: 'SZSE: 000988 (แม่)',
+    country: '🇨🇳 จีน',
+    logo: 'H', color: '#ff7043',
+    role: 'ประกอบโมดูล',
+    summary: 'บริษัทย่อยของ HGTECH ผู้ผลิตโมดูลออปติกรายใหญ่ของจีน มีความสัมพันธ์แน่นแฟ้นกับไฮเปอร์สเกลเลอร์ในประเทศ (Alibaba, Tencent, ByteDance) และส่วนแบ่ง 800G กำลังเติบโต',
+    products: ['100G / 400G / 800G datacom', 'Access network optics (PON)', 'Coherent pluggables', 'R&D silicon photonics'],
+    why: 'ส่วนหนึ่งของ "กลุ่มผู้ผลิตโมดูลจีน" ที่รวมกับ Innolight, Eoptolink และ Accelink ครองตลาดโมดูลดาต้าคอมกว่า 60% ของโลก'
+  },
+  {
+    name: 'Accelink (光迅科技)',
+    ticker: 'SZSE: 002281',
+    country: '🇨🇳 จีน',
+    logo: 'A', color: '#26c6da',
+    role: 'ชิ้นส่วน + โมดูล',
+    summary: 'เดิมคือ Wuhan Research Institute of Posts and Telecommunications (WRI) มีเทคโนโลยีลึกในชิป photonics และเป็นหนึ่งในไม่กี่บริษัทจีนที่ทำได้ตั้งแต่เลเซอร์ถึงโมดูล',
+    products: ['ชิปเลเซอร์ DFB / EML', 'AWG (Arrayed Waveguide Grating)', 'ทรานซีฟเวอร์ 400G / 800G', 'อุปกรณ์ DWDM'],
+    why: 'บริษัทจีนเพียงไม่กี่รายที่ทำ DWDM ได้ระดับที่แข่งกับตะวันตกได้ สำคัญต่อ supply chain ภายในประเทศของจีน'
+  },
+  {
+    name: 'Fabrinet',
+    ticker: 'NYSE: FN',
+    country: '🇹🇭 ไทย',
+    logo: 'F', color: '#9ec7ff',
+    role: 'รับจ้างผลิต',
+    summary: 'บริษัทรับจ้างผลิต optics และ electro-mechanical precision จากประเทศไทย (ปทุมธานี) สร้างทรานซีฟเวอร์และ line card ให้ Coherent, Lumentum, NVIDIA, Cisco',
+    products: ['ประกอบทรานซีฟเวอร์', 'รวมระบบ optical line', 'Precision optics, prism และชิ้นส่วนเลนส์', 'LiDAR รถยนต์'],
+    why: 'แกนหลักที่ซ่อนอยู่ — optics "Made by Lumentum / Coherent" ส่วนใหญ่ถูกประกอบจริงในคลีนรูมของ Fabrinet ที่ไทย เป็นจุดภูมิศาสตร์สำคัญของ supply chain'
+  },
+  {
+    name: 'Cisco / Acacia',
+    ticker: 'NASDAQ: CSCO',
+    country: '🇺🇸 อเมริกา',
+    logo: 'A', color: '#1ba0e2',
+    role: 'โมดูล coherent + ระบบ',
+    summary: 'Cisco ซื้อ Acacia Communications ในปี 2021 มูลค่า 4.5 พันล้านดอลลาร์ Acacia เป็นผู้บุกเบิก coherent pluggables (CFP2-DCO, 400ZR) ปัจจุบันเป็นแขน optics ของ Cisco',
+    products: ['400ZR / 400ZR+ pluggables', 'Bright ZR+ (amplified)', 'Silicon-photonic coherent engines', 'Routers Cisco 8000 / NCS'],
+    why: 'นำ coherent optics ใส่ใน router โดยตรง ข้ามความจำเป็นของระบบ DWDM แยก เป็นการเปลี่ยนแปลงเศรษฐศาสตร์ DCI อย่างมีนัยสำคัญ'
+  },
+  {
+    name: 'NVIDIA',
+    ticker: 'NASDAQ: NVDA',
+    country: '🇺🇸 อเมริกา',
+    logo: 'N', color: '#76b900',
+    role: 'ระบบ + CPO',
+    summary: 'ในอดีตไม่ใช่บริษัท optics แต่ผ่านการซื้อ Mellanox (2019) ครอบครอง InfiniBand + Spectrum Ethernet ปัจจุบันเป็นผู้ซื้อ 800G/1.6T optics รายใหญ่ที่สุดรายเดียว เปิดตัว silicon-photonic switches ในปี 2025',
+    products: ['Quantum InfiniBand switches', 'Spectrum-X Ethernet', 'Quantum-X / Spectrum-X Photonics (CPO)', 'LinkX cables และทรานซีฟเวอร์'],
+    why: 'กำหนดสเปคมาตรฐาน de facto ของ AI fabric optics การเปลี่ยนไปใช้ CPO ในปี 2025–2026 จะเปลี่ยนโฉมตลาดทรานซีฟเวอร์ทั้งอุตสาหกรรม'
+  },
+  {
+    name: 'Ciena',
+    ticker: 'NYSE: CIEN',
+    country: '🇺🇸 อเมริกา',
+    logo: 'N', color: '#34d399',
+    role: 'ระบบ + coherent',
+    summary: 'ผู้นำด้าน coherent DWDM line system และแพลตฟอร์ม DCI DSP WaveLogic ของเขาขับเคลื่อน 400ZR+ และ 800ZR coherent pluggables',
+    products: ['WaveLogic coherent DSPs', '6500 / Waveserver DCI platforms', 'Routing และ packet optical', 'Blue Planet software'],
+    why: 'ครองส่วนแบ่งใหญ่ของตลาด metro และ long-haul DCI ที่กำลังโตอย่างรวดเร็วเมื่อไฮเปอร์สเกลเลอร์เชื่อม "AI data center campus" ข้ามภูมิภาค'
+  },
+  {
+    name: 'Sumitomo Electric',
+    ticker: 'TYO: 5802',
+    country: '🇯🇵 ญี่ปุ่น',
+    logo: 'S', color: '#f472b6',
+    role: 'ไฟเบอร์ + เลเซอร์',
+    summary: 'หนึ่งในผู้ผลิตไฟเบอร์และ laser diode คุณภาพสูงสุดของโลก สายใต้ทะเลและสายพิเศษส่วนใหญ่เป็นของ Sumitomo นอกจากนี้ยังผลิต InP laser ที่สำคัญต่อ 400G/800G coherent',
+    products: ['ไฟเบอร์ single-mode, PMF', 'สายใต้ทะเล', 'InP laser diodes (DFB, EML)', 'ชุดต่อไฟเบอร์ (fusion splicer)'],
+    why: 'เป็น supplier หลักของ EML laser นอกอเมริกา สำคัญต่อความหลากหลายของ supply chain ในยุคที่ geopolitical risk สูง'
+  },
+  {
+    name: 'Prysmian',
+    ticker: 'BIT: PRY',
+    country: '🇮🇹 อิตาลี',
+    logo: 'P', color: '#60a5fa',
+    role: 'สายเคเบิล + submarine',
+    summary: 'ผู้นำระดับโลกด้านสายเคเบิล รวมถึงสายไฟเบอร์ออปติกใต้ทะเลและ terrestrial รายใหญ่ เคยเป็นบริษัทแม่ของ Draka ที่ร่วมทุนกับ YOFC',
+    products: ['สายใต้ทะเล (subsea cable)', 'ไฟเบอร์ความหนาแน่นสูงสำหรับ DC', 'สายไฟฟ้า HVDC', 'ระบบสายเคเบิลชุมชน'],
+    why: 'ครองโครงการสายใต้ทะเลที่ไฮเปอร์สเกลเลอร์ (Google, Meta) ใช้ในการเชื่อมทวีป เช่น 2Africa, Grace Hopper'
   },
 ];
-const quizHost = document.getElementById('quizHost');
-questions.forEach((q, i) => {
+const cg = document.getElementById('companyGrid');
+companies.forEach(c => {
   const el = document.createElement('div');
-  el.className = 'quiz';
-  el.style.marginBottom = '14px';
+  el.className = 'card';
   el.innerHTML = `
-    <div class="q">${i + 1}. ${q.q}</div>
-    <div class="opts"></div>
-    <div class="explain"></div>
+    <div class="company-head">
+      <div class="company-logo" style="background:${c.color};color:#05070d">${c.logo}</div>
+      <div>
+        <h3>${c.name}</h3>
+        <div class="sub">${c.ticker} · ${c.country} · ${c.role}</div>
+      </div>
+    </div>
+    <p>${c.summary}</p>
+    <details>
+      <summary>สินค้าหลัก</summary>
+      <ul>${c.products.map(p => `<li>${p}</li>`).join('')}</ul>
+    </details>
+    <details>
+      <summary>ทำไมถึงสำคัญ</summary>
+      <p style="font-size:13px;color:var(--muted)">${c.why}</p>
+    </details>
   `;
-  const opts = el.querySelector('.opts');
-  const explain = el.querySelector('.explain');
-  q.opts.forEach((o, j) => {
-    const b = document.createElement('button');
-    b.textContent = o;
-    b.onclick = () => {
-      opts.querySelectorAll('button').forEach(x => x.disabled = true);
-      if (j === q.a) {
-        b.classList.add('correct');
-        explain.innerHTML = '✔ Correct. ' + q.why;
-        explain.style.color = 'var(--ok)';
-      } else {
-        b.classList.add('wrong');
-        opts.children[q.a].classList.add('correct');
-        explain.innerHTML = '✘ Not quite. ' + q.why;
-        explain.style.color = 'var(--warn)';
-      }
-    };
-    opts.appendChild(b);
-  });
-  quizHost.appendChild(el);
+  cg.appendChild(el);
 });
 </script>
 </body>
